@@ -710,7 +710,10 @@ class FactoriesManager:
         """
         Helper method to instantiate daemon factories.
         """
-        script_path = self.get_salt_script_path(script_name)
+        if self.system_service:
+            script_path = script_name
+        else:
+            script_path = self.get_salt_script_path(script_name)
         return factory_class(
             config=daemon_config,
             start_timeout=start_timeout or self.start_timeout,
